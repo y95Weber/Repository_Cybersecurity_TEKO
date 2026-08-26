@@ -176,6 +176,7 @@ Diese Trennung zeigt exemplarisch das Prinzip des **Defense-in-Depth**: Die Fire
 ---
 
 ## 7. Anhang
+Im Ordner Modularbeit_2/Anhang - sind alle Screenshots, Tabellen und Konfigurationsdateien zu finden
 
 ### 7.1 Vollständige Firewall-Regeltabelle
 [Alle 14 Regeln einfügen]
