@@ -31,7 +31,7 @@ Die aktive Angriffssimulation (z.B. mittels OWASP Top 10 gegen Juice Shop) ist *
 ## 2. Architekturüberblick
 
 ### 2.1 Netzwerkdiagramm
-![Netzwerkarchitektur](Modularbeit_2/Anhang/Bilder/Netzwerkarchitektur.jpg)
+![Netzwerkarchitektur](Anhang/Bilder/Netzwerkarchitektur.jpg)
 
 ### 2.2 Komponentenübersicht
 
@@ -137,7 +137,7 @@ Die Regeln sind je Interface in der Reihenfolge aufgeführt, in der sie in OPNse
 
 **Wazuh-Agent-Status**
 Im Dashboard unter Agents: Status **Active** für JuiceShop-Agent.
-![Wazuh Agent Status](Modularbeit_2/Anhang/Bilder/Wazuh_Agent_Status.png)
+![Wazuh Agent Status](Anhang/Bilder/Wazuh_Agent_Status.png)
 
 **Test 1 – Wazuh-Agent-Kommunikation (Regel 7)**
 Auf VM Juice Shop (192.168.20.20):
