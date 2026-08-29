@@ -216,10 +216,10 @@ Diese Trennung zeigt exemplarisch das Prinzip des **Defense-in-Depth**: Die Fire
 ## 7. Anhang
 **Der Anhang ist wie folgt gegliedert:**
 
-- Modularbeit_2/Anhang/Bilder **Bilder von der Doku**
-  - Netzwerkarchitektur.jpg
-  - Wazuh_Agent_Status.png
-- Modularbeit_2/Anhang/Konfigurationen
-  - **config-OPNsense.internal-20260826174458.xml** ist die Konfigdatei von der OPNsense
-  - **ossec_Agent.conf** ist die Konfigdatei vom Wazuh Agent der auf der JuiceShop VM läuft
-  - **ossec_Server.conf** ist die Konfigdatei vom Wazuh Server welche auf der Admin-Wazuh VM läuft
+- **Anhang/Bilder** Bilder von der Doku
+  - [Netzwerkarchitektur.jpg](Anhang/Bilder/Netzwerkarchitektur.jpg)
+  - [Wazuh_Agent_Status.png](Anhang/Bilder/Wazuh_Agent_Status.png)
+- **Anhang/Konfigurationen**
+  - [config-OPNsense.internal-20260826174458.xml](Anhang/Konfigurationen/config-OPNsense.internal-20260826174458.xml) – Konfigdatei von der OPNsense
+  - [ossec_Agent.conf](Anhang/Konfigurationen/ossec_Agent.conf) Konfigdatei vom Wazuh Agent der auf der JuiceShop VM läuft
+  - [ossec_Server.conf](Anhang/Konfigurationen/ossec_Server.conf) Konfigdatei vom Wazuh Server welche auf der Admin-Wazuh VM läuft
