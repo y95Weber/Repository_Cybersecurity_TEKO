@@ -31,7 +31,7 @@ Die aktive Angriffssimulation (z.B. mittels OWASP Top 10 gegen Juice Shop) ist *
 ## 2. Architekturüberblick
 
 ### 2.1 Netzwerkdiagramm
-[Diagramm einfügen: OPNsense mit WAN/LAN10/LAN20, Wazuh-VM, Juice-Shop-VM]
+![Netzwerkarchitektur](Modularbeit_2/Anhang/Bilder/Netzwerkarchitektur.jpg)
 
 ### 2.2 Komponentenübersicht
 
@@ -70,7 +70,7 @@ Die Konfiguration der Interfaces sowie die weiteren Grundeinstellungen (Hostname
 ### 3.2 Wazuh Manager Installation (Debian 13 "Trixie")
 Bei der Installation musste das Installationsskript `wazuh-install.sh` angepasst werden, da die Abhängigkeit `software-properties-common` in Debian 13 "Trixie" nicht mehr existiert. Die Zeile wurde mittels `nano` entfernt, danach verlief die Installation erfolgreich.
 
-```bash
+```
 # Beispiel: Bearbeitung des Installationsskripts
 # Zeile mit "software-properties-common" entfernen/anpassen
 sudo nano wazuh-install.sh
@@ -83,7 +83,7 @@ Auf der Juice-Shop-VM (192.168.20.20) wurde das Wazuh-Agent-Paket installiert un
 
 Die Registrierung des Agents am Manager erfolgte automatisch über den in der Installation hinterlegten Enrollment-Mechanismus (Kommunikation über Port 1515), die eigentliche Ereignis- und Log-Übertragung läuft anschliessend über Port 1514. Damit diese Kommunikation stattfinden konnte, war die entsprechende Firewall-Freigabe auf LAN20 (siehe Kapitel 3.4) Voraussetzung.
 
-Der erfolgreiche Abschluss des Deployments wurde im Wazuh-Dashboard unter *Agents* überprüft, wo der registrierte Agent mit dem Status **"Active"** angezeigt wird [Screenshot einfügen].
+Der erfolgreiche Abschluss des Deployments wurde im Wazuh-Dashboard unter *Agents* überprüft, wo der registrierte Agent mit dem Status **"Active"** angezeigt wird.
 
 ### 3.4 Firewall-Regelwerk
 
@@ -134,8 +134,46 @@ Die Regeln sind je Interface in der Reihenfolge aufgeführt, in der sie in OPNse
 - Die abschliessenden "Block remaining"-Regeln (#13, #14) fungieren als explizite Catch-all-Regeln und dokumentieren das Least-Privilege-Prinzip, auch wenn OPNsense implizit ohnehin alles blockt, was nicht explizit erlaubt ist.
 
 ### 3.5 Validierung / Tests
-- Wazuh-Agent zeigt Status "Active" im Dashboard [Screenshot]
-- Konnektivitätstests zwischen den Segmenten (erlaubte/blockierte Verbindungen) [ggf. Nachweise]
+
+**Wazuh-Agent-Status**
+Im Dashboard unter Agents: Status **Active** für JuiceShop-Agent.
+![Wazuh Agent Status](Modularbeit_2/Anhang/Bilder/Wazuh_Agent_Status.png)
+
+**Test 1 – Wazuh-Agent-Kommunikation (Regel 7)**
+Auf VM Juice Shop (192.168.20.20):
+```
+nc -zv 192.168.10.10 1514
+nc -zv 192.168.10.10 1515
+```
+Erwartet: beide **succeeded**.
+
+**Test 2 – Block LAN20 → LAN10 (Regel 8)**
+Auf VM Juice Shop (192.168.20.20):
+```
+ping 192.168.10.10
+```
+Erwartet: **Timeout**.
+
+**Test 3 – Block LAN10 → LAN20 (Regel 6)**
+Auf VM Wazuh Manager (192.168.10.10):
+```
+nc -zv -w 3 192.168.20.20 3000
+```
+Erwartet: **kein Erfolg**.
+
+**Test 4 – Internet-Zugriff & DNS**
+Auf beiden VMs:
+```
+curl -I https://google.com
+```
+Erwartet: HTTP-Statuscode `200`/`301`.
+
+**Test 5 – Catch-all Block LAN20 (Regel 13)**
+Auf VM Juice Shop (192.168.20.20):
+```
+nc -zv -w 3 192.168.10.10 22
+```
+Erwartet: **kein Erfolg**.
 
 ---
 
@@ -176,15 +214,12 @@ Diese Trennung zeigt exemplarisch das Prinzip des **Defense-in-Depth**: Die Fire
 ---
 
 ## 7. Anhang
-Im Ordner Modularbeit_2/Anhang - sind alle Screenshots, Tabellen und Konfigurationsdateien zu finden
+**Der Anhang ist wie folgt gegliedert:**
 
-### 7.1 Vollständige Firewall-Regeltabelle
-[Alle 14 Regeln einfügen]
-
-### 7.2 Screenshots
-- Wazuh Dashboard – Agent Status
-- OPNsense Firewall-Regeln
-- [weitere]
-
-### 7.3 Konfigurationsauszüge
-[relevante Config-Dateien, z.B. Interface-Konfiguration, DNS-Einstellungen]
+- Modularbeit_2/Anhang/Bilder **Bilder von der Doku**
+  - Netzwerkarchitektur.jpg
+  - Wazuh_Agent_Status.png
+- Modularbeit_2/Anhang/Konfigurationen
+  - **config-OPNsense.internal-20260826174458.xml** ist die Konfigdatei von der OPNsense
+  - **ossec_Agent.conf** ist die Konfigdatei vom Wazuh Agent der auf der JuiceShop VM läuft
+  - **ossec_Server.conf** ist die Konfigdatei vom Wazuh Server welche auf der Admin-Wazuh VM läuft
