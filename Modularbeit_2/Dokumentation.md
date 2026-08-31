@@ -12,7 +12,7 @@
 ## 1. Einleitung
 
 ### 1.1 Ausgangslage
-Im Rahmen dieser Modularbeit wurde ein Detection Lab aufgebaut, das die zentralen Konzepte des Blue-Team- und SOC-Monitorings praktisch demonstriert. Der Fokus liegt auf den drei Bereichen **Hardening**, **Firewall** und **Monitoring** in einer virtualisierten Laborumgebung.
+Im Rahmen dieser Modularbeit wurde ein Detection Lab aufgebaut, das die zentralen Konzepte des Blue-Team praktisch demonstriert. Der Fokus liegt auf den drei Bereichen **Hardening**, **Firewall** und **Monitoring** in einer virtualisierten Laborumgebung.
 
 ### 1.2 Bezug zum Modul
 Im Modul Cybersecurity haben wir uns intensiv mit den Themen Firewall, Hardening und Monitoring auseinandergesetzt. Ich selbst hatte jedoch bis dahin noch nie praktisch eine Firewall installiert und konfiguriert und verfügte nur über geringe Monitoring-Kenntnisse. Dieses Setup erschien mir daher als ideales Projekt, um diese Technologien praxisnah zu erlernen und zu vertiefen. Zusätzlich bietet mir das aufgebaute Lab eine solide Grundlage für die Projektarbeit, welche am Ende dieses Moduls präsentiert wird.
