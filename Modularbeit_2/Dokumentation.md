@@ -15,13 +15,12 @@
 Im Rahmen dieser Modularbeit wurde ein Detection Lab aufgebaut, das die zentralen Konzepte des Blue-Team praktisch demonstriert. Der Fokus liegt auf den drei Bereichen **Hardening**, **Firewall** und **Monitoring** in einer virtualisierten Laborumgebung.
 
 ### 1.2 Bezug zum Modul
-Im Modul Cybersecurity haben wir uns intensiv mit den Themen Firewall, Hardening und Monitoring auseinandergesetzt. Ich selbst hatte jedoch bis dahin noch nie praktisch eine Firewall installiert und konfiguriert und verfügte nur über geringe Monitoring-Kenntnisse. Dieses Setup erschien mir daher als ideales Projekt, um diese Technologien praxisnah zu erlernen und zu vertiefen. Zusätzlich bietet mir das aufgebaute Lab eine solide Grundlage für die Projektarbeit, welche am Ende dieses Moduls präsentiert wird.
+Im Modul Cybersecurity haben wir uns intensiv mit den Themen Firewall, Hardening und Monitoring auseinandergesetzt. Ich selbst hatte jedoch bis dahin noch nie praktisch eine Firewall installiert und konfiguriert und verfügte nur über geringe Monitoring Kenntnisse. Dieses Setup erschien mir daher als ideales Projekt, um diese Technologien praxisnah zu erlernen und zu vertiefen. Zusätzlich bietet mir das aufgebaute Lab eine solide Grundlage für die Projektarbeit, welche am Ende dieses Moduls präsentiert wird.
 
 ### 1.3 Zielsetzung
-Ziel dieser Arbeit ist der Aufbau einer funktionsfähigen Detection-Lab-Umgebung, in der:
-- ein zentrales Firewall-System (OPNsense) das Netzwerk segmentiert und absichert,
-- eine SIEM/XDR-Lösung (Wazuh) sicherheitsrelevante Ereignisse überwacht und protokolliert,
-- eine bewusst verwundbare Webapplikation (OWASP Juice Shop) als Monitoring-Ziel dient.
+Ziel dieser Arbeit ist der Aufbau einer funktionsfähigen Detection-Lab Umgebung, in der:
+- Ein zentrales Firewall-System (OPNsense) das Netzwerk segmentiert und absichert.
+- Eine SIEM/XDR-Lösung (Wazuh) sicherheitsrelevante Ereignisse überwacht und protokolliert.
 
 ### 1.4 Abgrenzung
 Die aktive Angriffssimulation (z.B. mittels OWASP Top 10 gegen Juice Shop) ist **nicht Teil dieser Arbeit** und explizit für eine spätere, separate Modularbeit vorgesehen. Diese Arbeit fokussiert sich auf den Aufbau der defensiven Infrastruktur (Hardening, Firewalling, Monitoring-Grundlagen).
