@@ -12,7 +12,7 @@
 ## 1. Einleitung
 
 ### 1.1 Ausgangslage
-Im Rahmen dieser Modularbeit wurde ein Detection Lab aufgebaut, das die zentralen Konzepte des Blue-Team praktisch demonstriert. Der Fokus liegt auf den drei Bereichen **Hardening**, **Firewall** und **Monitoring** in einer virtualisierten Laborumgebung.
+Im Rahmen dieser Modularbeit wurde ein Detection Lab aufgebaut, das die zentralen Konzepte des Blue-Teamings praktisch demonstriert. Der Fokus liegt auf den drei Bereichen **Hardening**, **Firewall** und **Monitoring** in einer virtualisierten Laborumgebung.
 
 ### 1.2 Bezug zum Modul
 Im Modul Cybersecurity haben wir uns intensiv mit den Themen Firewall, Hardening und Monitoring auseinandergesetzt. Ich selbst hatte jedoch bis dahin noch nie praktisch eine Firewall installiert und konfiguriert und verfügte nur über geringe Monitoring Kenntnisse. Dieses Setup erschien mir daher als ideales Projekt, um diese Technologien praxisnah zu erlernen und zu vertiefen. Zusätzlich bietet mir das aufgebaute Lab eine solide Grundlage für die Projektarbeit, welche am Ende dieses Moduls präsentiert wird.
@@ -92,11 +92,11 @@ Das Regelwerk umfasst 14 Regeln über die Interfaces LAN10, LAN20 und WAN und fo
 - **First-Match-Wins**: OPNsense wertet Regeln in der definierten Reihenfolge aus (`quick`-Keyword) – spezifische Ausnahmeregeln müssen vor generellen Block-Regeln stehen.
 - **Agent-initiierte Verbindungen**: Wazuh-Agenten bauen die Verbindung immer aktiv zum Manager auf. Die entsprechende Firewall-Ausnahme (Port 1514–1515) muss daher auf dem Segment des Agents (LAN20) definiert werden, nicht auf dem des Managers.
 - **Internet-Traffic**: Als Ziel für internetgebundenen Traffic muss "any" verwendet werden, nicht der WAN-Alias, da dieser nur das lokale WAN-Subnetz abdeckt.
-- **Aliases statt Rohdaten**: Wo möglich wurden Host-Aliases (z.B. `Wazuh_Manager_Host`) anstelle einzelner /32-IP-Einträge verwendet, um die Wartbarkeit zu erhöhen.
+- **Aliases statt Rohdaten**: Wo möglich wurden Host-Aliases (z.B. `LAN10_Host_192_168_10_10`, `Web-Ports`) verwendet, um die Wartbarkeit zu erhöhen.
 
 **Vollständiges Regelwerk (14 Regeln)**
 
-Die Regeln sind je Interface in der Reihenfolge aufgeführt, in der sie in OPNsense ausgewertet werden (first-match-wins).
+Die Regeln sind je Interface in der Reihenfolge aufgeführt, in der sie in OPNsense ausgewertet werden.
 
 **Interface: LAN10_Admin_Wazuh**
 
@@ -130,7 +130,7 @@ Die Regeln sind je Interface in der Reihenfolge aufgeführt, in der sie in OPNse
 **Anmerkungen zur Reihenfolge:**
 - Auf LAN10 steht die Ausnahme für Firewall-GUI-Zugriff (#1) ganz oben, die Block-Regel Richtung LAN20 (#6) folgt erst nach den generellen Allow-Regeln, da Letztere ohnehin nicht auf das LAN20-Netz zielen.
 - Auf LAN20 steht die spezifische Wazuh-Agent-Ausnahme (#7) zwingend **vor** der generellen Block-Regel Richtung LAN10 (#8) – ansonsten würde die Agent-Kommunikation blockiert.
-- Die abschliessenden "Block remaining"-Regeln (#13, #14) fungieren als explizite Catch-all-Regeln und dokumentieren das Least-Privilege-Prinzip, auch wenn OPNsense implizit ohnehin alles blockt, was nicht explizit erlaubt ist.
+- Die abschliessenden "Block remaining"-Regeln (#13, #14) fungieren als explizite Catch-all-Regeln und dokumentieren das Least-Privilege-Prinzip, auch wenn OPNsense implizit ohnehin alles blockt was nicht explizit erlaubt ist.
 
 ### 3.5 Validierung / Tests
 
@@ -196,7 +196,7 @@ VirtualBox Host-only Networking gewährt dem Host systembedingt direkten, ungefi
 ## 5. Erkenntnisse / Lessons Learned
 
 - Firewall-Regeln für Agent-basierte Systeme müssen aus Sicht der Verbindungsrichtung gedacht werden, nicht aus Sicht der "Wichtigkeit" des Systems.
-- Regelreihenfolge ist in OPNsense entscheidend – Ausnahmen immer vor generellen Blockregeln.
+- Regelreihenfolge ist in OPNsense entscheidend. Ausnahmen immer vor generellen Blockregeln.
 - Kompatibilitätsprüfungen bei neuen OS-Versionen (z.B. Debian Trixie) sind vor der Installation von Drittsoftware essenziell.
 - Aliases erhöhen die Lesbarkeit und Wartbarkeit von Firewall-Regelwerken erheblich.
 
@@ -204,11 +204,9 @@ VirtualBox Host-only Networking gewährt dem Host systembedingt direkten, ungefi
 
 ## 6. Ausblick
 
-Das aufgebaute Detection Lab bildet die Grundlage für eine geplante, separate Folgearbeit im Bereich Angriffssimulation. Dabei sollen gezielt Schwachstellen gemäss **OWASP Top 10** gegen die Juice-Shop-Instanz ausgenutzt und die Erkennung dieser Angriffe über Wazuh demonstriert werden (u.a. mittels File Integrity Monitoring, Security Configuration Assessment, Threat Hunting und Vulnerability Detection).
+Das aufgebaute Detection Lab bildet die Grundlage für eine geplante, separate Folgearbeit im Bereich Angriffssimulation. Dabei sollen gezielt Schwachstellen gemäss **OWASP Top 10** gegen die Juice-Shop-Instanz ausgenutzt und evtl. die Erkennung dieser Angriffe über Wazuh demonstriert werden (u.a. mittels File Integrity Monitoring, Security Configuration Assessment, Threat Hunting und Vulnerability Detection).
 
-**Wichtig für die geplante Angriffssimulation:** Das bestehende Firewall-Regelwerk soll dabei **nicht gelockert** werden. OWASP-Top-10-Angriffe (z.B. SQL Injection, XSS, Broken Access Control) finden auf Applikationsebene (Layer 7) statt und werden von einer klassischen Netzwerk-Firewall (Layer 3/4) ohnehin nicht abgefangen, solange der reguläre Web-Traffic zu Juice Shop erlaubt ist. Das Regelwerk bleibt somit nach dem Least-Privilege-Prinzip bestehen; benötigt wird lediglich eine zusätzliche, dokumentierte Regel, die einer dedizierten Angreifer-VM (z.B. Kali Linux, eigenes Segment) gezielten Zugriff auf den Juice-Shop-Webport erlaubt – analog zu einem realen Nutzerzugriff.
-
-Diese Trennung zeigt exemplarisch das Prinzip des **Defense-in-Depth**: Die Firewall schützt die Netzwerkebene, während Wazuh als Monitoring-Layer applikationsseitige Angriffe sichtbar macht, die auf Netzwerkebene nicht erkennbar sind.
+**Wichtig für die geplante Angriffssimulation:** Das bestehende Firewall-Regelwerk soll dabei **nicht gelockert** werden. OWASP Top-10 Angriffe (z.B. SQL Injection, XSS, Broken Access Control) finden auf Applikationsebene (Layer 7) statt und werden von einer klassischen Netzwerk-Firewall (Layer 3/4) ohnehin nicht abgefangen, solange der reguläre Web-Traffic zu Juice Shop erlaubt ist. Das Regelwerk bleibt somit nach dem Least-Privilege-Prinzip bestehen. Benötigt wird lediglich eine zusätzliche, dokumentierte Regel, die einer dedizierten Angreifer-VM (z.B. Kali Linux, eigenes Segment) gezielten Zugriff auf den Juice-Shop-Webport erlaubt, was bei einer öffentlich zugänglichen Webapplikation ohnehin der Fall ist.
 
 ---
 
