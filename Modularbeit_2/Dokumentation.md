@@ -1,4 +1,4 @@
-# Modularbeit II – Detection Lab
+# Modularbeit II
 ## Blue Team / SOC Monitoring mit OPNsense und Wazuh
 
 **Autor:** Yves
