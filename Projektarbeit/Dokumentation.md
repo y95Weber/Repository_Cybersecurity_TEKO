@@ -32,11 +32,11 @@ Ein Penetrationstest ist ein autorisierter, simulierter Angriff auf ein IT-Syste
 ### 2.2 Phasenmodell
 Ein typischer Pentest lässt sich in folgende Phasen gliedern:
  
-1. **Reconnaissance (Aufklärung)** – Sammeln von Informationen über das Zielsystem
-2. **Scanning / Enumeration** – Identifikation offener Ports, Dienste, Versionen
-3. **Exploitation** – Ausnutzung gefundener Schwachstellen zur Erlangung von Zugriff
-4. **Post-Exploitation / Privilege Escalation** – Ausweitung der Rechte, Absicherung des Zugriffs
-5. **Reporting** – Dokumentation der Ergebnisse und Handlungsempfehlungen
+1. **Reconnaissance (Aufklärung):** Sammeln von Informationen über das Zielsystem
+2. **Scanning / Enumeration:** Identifikation offener Ports, Dienste, Versionen
+3. **Exploitation:** Ausnutzung gefundener Schwachstellen zur Erlangung von Zugriff
+4. **Post-Exploitation / Privilege Escalation:** Ausweitung der Rechte, Absicherung des Zugriffs
+5. **Reporting:** Dokumentation der Ergebnisse und Handlungsempfehlungen
 ### 2.3 Tools je Phase
  
 | Phase                | Tools                                               |
