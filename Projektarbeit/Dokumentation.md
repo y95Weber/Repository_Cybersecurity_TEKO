@@ -58,13 +58,14 @@ Ein typischer Pentest lässt sich in folgende Phasen gliedern:
 ### 3.1 Was ist Metasploit?
 Metasploit ist ein Open-Source-Framework für die Entwicklung, das Testen und die Ausführung von Exploits gegen Zielsysteme. Es wurde ursprünglich 2003 von H. D. Moore entwickelt und wird seit 2009 von Rapid7 weitergeführt.
  
-*(→ hier ggf. kurze Zeitleiste/Geschichte ergänzen)*
+Ursprünglich war Metasploit in **Perl** geschrieben, wurde 2007 mit Version 3.0 komplett in **Ruby** neu implementiert und ist bis heute die Basis des Frameworks. Seitdem hat es sich von einer reinen Exploit-Sammlung zu einem vollständigen Framework mit Datenbank-Anbindung, Meterpreter, umfangreicher Post-Exploitation mit Automatisierungsfunktionalität sowie einer kommerziellen Pro-Version entwickelt.
  
 ### 3.2 Einsatzzweck
 - Simulation realer Angriffe im Rahmen autorisierter Pentests
 - Validierung von Schwachstellen (Proof of Concept)
 - Schulung und Sicherheitsforschung
 - Community Edition (kostenlos, CLI-basiert) vs. Metasploit Pro (kommerziell, GUI, Automatisierung)
+
 ### 3.3 Architektur und Funktionsweise
  
 #### 3.3.1 Modul-Typen
@@ -156,18 +157,24 @@ Die Demo folgt einer "Capture the Flag"-Logik:
 6. Erfolgreicher Flag-Zugriff
 Flag-Ablageorte: `/root/flag.txt` (Linux) bzw. `C:\Users\Administrator\Desktop\flag.txt` (Windows), jeweils mit eingeschränkten Zugriffsrechten.
  
-*(Detaillierter Ablauf inkl. Screenshots gehört primär in die Präsentation / den Anhang, hier reicht die Kurzskizze.)*
- 
 ---
  
 ## 5. Fazit
  
 ### 5.1 Zusammenfassung
-*(kurze Zusammenfassung der wichtigsten Erkenntnisse – nach Fertigstellung des praktischen Teils ergänzen)*
- 
+Die Arbeit zeigt, dass ein Penetest einem klar strukturierten Ablauf folgt. Von der Aufklärung über Scanning und Exploitation bis zur Rechteausweitung und dass für jede Phase spezialisierte Tools existieren. Am Beispiel von Metasploit wurde deutlich, wie ein modulares Framework diesen gesamten Prozess unterstützt. Die praktische Umsetzung im Labor (Vagrant/VirtualBox, Metasploitable3) bestätigte, dass Metasploit vor allem bei klassischen Netzwerk- und Dienst-Schwachstellen seine Stärken ausspielt. 
 ### 5.2 Reflexion
-- Was hat gut funktioniert?
-- Welche Herausforderungen gab es (z. B. Lab-Setup, IP-Konflikte im Vagrantfile)?
+**Was hat gut funktioniert?**
+- Der CTF-artige Aufbau der Demo (Recon → Exploit → gescheiterter Flag-Zugriff → Privilege Escalation → Erfolg) hat eine klare, nachvollziehbare Story ergeben, ohne dass ein kompliziertes Szenario nötig war.
+- Die Beschränkung auf Metasploit-native Methoden bei der Rechteausweitung hat die Demo konsistent gehalten und unnötige Tool-Wechsel vermieden.
+- Die Entscheidung für Metasploitable3 als Zielsystem statt Juice Shop hat den Fokus klar auf netzwerkbasierte Schwachstellen gelenkt, für die Metasploit ausgelegt ist.
+
+
+**Welche Herausforderungen gab es?**
+- Das Aufsetzen der Laborumgebung mit Vagrant/VirtualBox war anfangs mit kleineren Problemen verbunden, u.a. IP-Konflikten im `192.168.56.x`-Netz zwischen mehreren VMs.
+- Der bewusste Verzicht auf eine SIEM-Integration (Wazuh) bedeutete, dass die Detektions-Perspektive komplett ausserhalb des Scops blieb. Für eine vollständigere Betrachtung wäre das ein sinnvoller nächster Schritt.
+- Abhängig vom Wissensstand: Der Umgang mit `msfconsole`, Payload-Typen (staged/stageless) und Meterpreter erforderte etwas Einarbeitungszeit, bevor sich die einzelnen Konzepte sauber ineinanderfügten.
+
 ### 5.3 Ausblick
 - Mögliche Erweiterung um SIEM-Integration (z. B. Wazuh) für Detektions-Perspektive
 - Weitere Zielsysteme / komplexere Szenarien
