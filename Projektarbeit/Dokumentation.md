@@ -73,26 +73,65 @@ Metasploit ist ein Open-Source-Framework für die Entwicklung, das Testen und di
 - **Auxiliary:** Hilfsmodule (z. B. Scanner, Fuzzer, DoS)
 - **Post:** Module für die Post-Exploitation-Phase
 - **Encoders:** Verschleierung von Payloads (z. B. zur AV-Umgehung)
-- **NOPs:** Padding zur Stabilisierung von Exploits
+- **NOPs:** Helfen dabei verschlüsselte Payloads zu stabilisieren, damit diese beim entschlüsseln immer noch funktionieren
+
+
 #### 3.3.2 msfconsole
-Zentrale Konsole zur Interaktion mit dem Framework. Wichtige Befehle: `search`, `use`, `set`, `show options`, `exploit/run`. Anbindung an eine Datenbank (PostgreSQL) zur Verwaltung von Workspaces, Hosts und Ergebnissen.
+Zentrale Konsole zur Interaktion mit dem Framework. Anbindung an eine Datenbank (PostgreSQL) zur Verwaltung von Workspaces, Hosts und Ergebnissen.
+
+**Die wichtigsten Befehle:**
+
+| Befehl                    | Beschreibung                                                         |
+|---------------------------|-----------------------------------------------------------------------|
+| `help` / `?`              | Zeigt alle verfügbaren Befehle mit Beschreibung an                    |
+| `show all`                | Listet alle verfügbaren Module auf (Exploits, Payloads, Encoders etc.)|
+| `show exploits`           | Listet alle Exploit-Module auf                                        |
+| `show payloads`           | Listet alle Payload-Module auf                                        |
+| `show encoders`           | Listet alle Encoder-Module auf                                        |
+| `show options`            | Zeigt die konfigurierbaren Optionen des aktuell geladenen Moduls an   |
+| `search <keyword>`        | Sucht Module nach Name, CVE oder Stichwort                            |
+| `use <module>`            | Lädt ein bestimmtes Modul in die Konsole                              |
+| `set <option> <value>`    | Setzt eine Option für das aktuelle Modul                              |
+| `setg <option> <value>`   | Setzt eine globale Variable (bleibt auch bei Modulwechsel erhalten)   |
+| `unset <option>`          | Entfernt eine zuvor gesetzte Option                                   |
+| `run` / `execute`         | Führt das aktuelle Modul aus                                          |
+| `sessions`                | Listet aktive Sessions auf                                            |
+| `route`                   | Leitet Traffic über eine Session (für Pivoting)                       |
+| `history`                 | Zeigt den Befehlsverlauf an                                           |
+| `version`                 | Zeigt Framework- und Library-Versionsnummern an                       |
  
-#### 3.3.3 Payload-Konzepte
+
+
+#### 3.3.3 msvenom
+Ist Metasploits eigenständiges Kommandozeilen-Tool zur Generierung und Kodierung von Payloads außerhalb der msfconsole.
+ 
+#### 3.3.4 Payload-Konzepte
 - **Staged vs. Stageless:** gestufte Übertragung des Payloads vs. vollständiger Payload in einem Schritt
 - **Bind vs. Reverse Shell:** Zielsystem öffnet Port (bind) vs. Zielsystem baut Verbindung zum Angreifer auf (reverse); Reverse Shells sind in der Praxis meist vorzuziehen (Firewall/NAT-Umgehung)
-#### 3.3.4 Meterpreter
+#### 3.3.5 Meterpreter
 Fortgeschrittener, im RAM laufender Payload mit erweiterten Funktionen (Dateisystemzugriff, Prozessmanipulation, Pivoting, Screenshot, Keylogging etc.). Zentrales Werkzeug für die Post-Exploitation.
  
-#### 3.3.5 Post-Exploitation & Privilege Escalation
-- `local_exploit_suggester` (Linux) – automatisiertes Vorschlagen passender lokaler Privilege-Escalation-Exploits
-- `getsystem` (Windows) – automatisierte Rechteausweitung auf SYSTEM-Ebene
+#### 3.3.6 Post-Exploitation & Privilege Escalation
+- `local_exploit_suggester` (Linux) automatisiertes Vorschlagen passender lokaler Privilege-Escalation-Exploits
+- `getsystem` (Windows) automatisierte Rechteausweitung auf SYSTEM-Ebene
+
+#### 3.3.7 Typischer Modul-Workflow in msfconsole
+Der Umgang mit einem Modul folgt in msfconsole immer demselben Schema:
+
+1. **Suchen**: `search <begriff>`
+2. **Laden**: `use <modulpfad>`
+3. **Optionen prüfen**: `show options`
+4. **Optionen setzen**: `set <OPTION> <wert>` (z. B. RHOSTS, LHOST, LPORT)
+5. **Ausführen**: `run` bzw. bei Exploits zusätzlich Payload setzen (`set payload ...`)
+Dieses Schema ist unabhängig vom Modultyp (Auxiliary, Exploit, Post) immer gleich und bildet die praktische Grundlage für den späteren Demo-Ablauf.
+
 ### 3.4 Stärken und Grenzen
 **Stärken:**
 - Sehr grosse, gepflegte Exploit-Datenbank
-- Starke Automatisierung (Post-Exploitation, Privilege Escalation)
+- Starke Automatisierung
 - Ideal für netzwerk-/dienstbasierte Schwachstellen
 **Grenzen:**
-- Weniger geeignet für komplexe Web-Applikationslogik (dort eher Burp Suite)
+- Weniger geeignet für komplexe Web-Applikationslogik (Besser Burp Suite)
 - Erkennung durch moderne AV/EDR-Systeme möglich
 - Exploit-Erfolg abhängig von Patch-Stand des Zielsystems
 ---
