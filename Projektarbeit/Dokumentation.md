@@ -139,4 +139,5 @@ Flag-Ablageorte: `/root/flag.txt` (Linux) bzw. `C:\Users\Administrator\Desktop\f
 Der Anhang ist wie folgt gegliedert:
 
 Bilder --> Projektarbeit/Anhang/Bilder
+
 Konfig-Files --> /Projektarbeit/Anhang/Konfigurationen
