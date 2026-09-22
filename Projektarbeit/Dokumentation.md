@@ -186,7 +186,11 @@ Danach folgt der bereits beschriebene Standard-Workflow (`use` → `show options
 - Netzwerktopologie: privates/host-only Netz im Bereich `192.168.56.x`
 - Zielsysteme: **Metasploitable3** (primäres Ziel)
 ### 4.2 Zielsystem-Beschreibung
-Kurze Beschreibung der verwundbaren Dienste auf Metasploitable3, die im Rahmen der Demo ausgenutzt werden.
+Als Zielsystem wurde **Metasploitable3** in einer isolierten Laborumgebung verwendet. Beim Nmap-Scan wurde auf Port 21 der Dienst **ProFTPD 1.3.5** erkannt.
+
+Für den initialen Zugriff wurde das Metasploit-Modul `exploit/unix/ftp/proftpd_modcopy_exec` eingesetzt. Dadurch konnte eine Command-Shell mit den Rechten des Benutzers `www-data` erlangt werden.
+
+Anschliessend wurde die Session zu Meterpreter erweitert. Der `local_exploit_suggester` schlug unter anderem **CVE-2021-4034 (PwnKit)** als möglichen Privilege-Escalation-Exploit vor. Durch dessen Ausnutzung konnte eine Meterpreter-Session mit **Root-Rechten** erlangt und anschliessend auf die geschützte Flag-Datei zugegriffen werden.
  
 ### 4.3 Demo-Szenario (Übersicht)
 Die Demo folgt einer "Capture the Flag"-Logik:
@@ -202,7 +206,7 @@ Flag-Ablageorte: `/root/flag.txt` (Linux) bzw. `C:\Users\Administrator\Desktop\f
 ---
  
 ## 5. Fazit
- 
+
 ### 5.1 Zusammenfassung
 Die Arbeit zeigt, dass ein Penetest einem klar strukturierten Ablauf folgt. Von der Aufklärung über Scanning und Exploitation bis zur Rechteausweitung und dass für jede Phase spezialisierte Tools existieren. Am Beispiel von Metasploit wurde deutlich, wie ein modulares Framework diesen gesamten Prozess unterstützt. Die praktische Umsetzung im Labor (Vagrant/VirtualBox, Metasploitable3) bestätigte, dass Metasploit vor allem bei klassischen Netzwerk- und Dienst-Schwachstellen seine Stärken ausspielt. 
 ### 5.2 Reflexion
@@ -227,5 +231,3 @@ Die Arbeit zeigt, dass ein Penetest einem klar strukturierten Ablauf folgt. Von 
 Der Anhang ist wie folgt gegliedert:
 
 Bilder --> [Bilder](Anhang/Bilder)
-
-Konfig-Files --> [Konfig-Files](Anhang/Konfigurationen)
