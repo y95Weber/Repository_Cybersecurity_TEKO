@@ -126,7 +126,49 @@ Der Umgang mit einem Modul folgt in msfconsole immer demselben Schema:
 5. **Ausführen**: `run` bzw. bei Exploits zusätzlich Payload setzen (`set payload ...`)
 Dieses Schema ist unabhängig vom Modultyp (Auxiliary, Exploit, Post) immer gleich und bildet die praktische Grundlage für den späteren Demo-Ablauf.
 
-### 3.4 Stärken und Grenzen
+### 3.4 Von Scan zu Exploit: Schwachstellenidentifikation
+
+#### 3.4.1 Referenztabelle: Häufige Ports und typische Schwachstellen
+
+| Port      | Dienst    | Typische Schwachstellen                                                                 |
+|-----------|-----------|-------------------------------------------------------------------------------------------|
+| 21        | FTP       | Anonymous Login erlaubt, veraltete Server-Versionen mit bekannten Backdoors               |
+| 22        | SSH       | Schwache/Default-Credentials, Brute-Force möglich, veraltete Versionen mit CVEs           |
+| 23        | Telnet    | Unverschlüsselte Übertragung (Credentials im Klartext), Default-Zugangsdaten              |
+| 25        | SMTP      | User-Enumeration via VRFY/EXPN, offen konfiguriertes Open Relay                           |
+| 80 / 443  | HTTP(S)   | Veraltete Webserver-/CMS-Versionen, bekannte Applikations-CVEs, Default-Admin-Panels       |
+| 139 / 445 | SMB       | Veraltete SMB-Protokollversion, Null-Session-Zugriff, fehlerhafte Authentifizierung        |
+| 1433      | MSSQL     | Schwache SA-Credentials, veraltete/ungepatchte Version                                    |
+| 3306      | MySQL     | Schwache Root-Credentials, veraltete Version mit bekannten CVEs                           |
+| 3389      | RDP       | Schwache Credentials, veraltete Windows-Version (BlueKeep-Klasse Schwachstellen)          |
+| 5985/5986 | WinRM     | Schwache/Default-Credentials, ungenügend eingeschränkter Zugriff                          |
+| 8080      | HTTP-Alt (z.B. Tomcat) | Default-Credentials im Manager-Interface, unsichere Deployment-Funktion     |
+
+> Diese Schwachstellenklassen sind exemplarisch und typisch für Testumgebungen wie
+> Metasploitable3. Ob sie tatsächlich vorliegen, entscheidet immer die konkret
+> erkannte Version aus dem Nmap-Scan.
+
+#### 3.4.2 Exploit-Suche: Von der Schwachstelle zum Modul
+
+Sobald eine mögliche Schwachstelle vermutet wird, folgt die gezielte Suche nach
+einem passenden Modul:
+
+- **In msfconsole:** `search <dienst>` oder `search cve:<jahr>-<nummer>`. Durchsucht die integrierte Modul-Datenbank nach Name, CVE oder Stichwort
+- **Offline/extern:** `searchsploit <dienst> <version>`. Durchsucht die
+  Exploit-DB nach passenden Public Exploits
+- **Google-Suche:** Ergänzend hilfreich, z. B. `"<dienst> <version> exploit"`
+  oder `"<dienst> <version> CVE"`. Liefert oft Blog-Artikel, Advisories oder
+  Proof-of-Concepts, die (noch) nicht in Exploit-DB/Metasploit gelistet sind
+- **Version prüfen:** Vor dem Laden mit `info <modul>` kontrollieren, ob die
+  betroffene Versionsspanne mit der gescannten Version übereinstimmt
+- **Ranking beachten:** msfconsole bewertet Module (`excellent`, `great`,
+  `normal` etc.). Ein höheres Ranking bedeutet stabileren, zuverlässigeren
+  Exploit-Erfolg bei geringerem Risiko eines Absturzes des Zieldienstes
+
+Danach folgt der bereits beschriebene Standard-Workflow (`use` → `show options`
+→ `set` → `run`).
+
+### 3.5 Stärken und Grenzen
 **Stärken:**
 - Sehr grosse, gepflegte Exploit-Datenbank
 - Starke Automatisierung
