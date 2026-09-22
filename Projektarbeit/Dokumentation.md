@@ -226,6 +226,6 @@ Die Arbeit zeigt, dass ein Penetest einem klar strukturierten Ablauf folgt. Von 
 
 Der Anhang ist wie folgt gegliedert:
 
-Bilder --> Projektarbeit/Anhang/Bilder
+Bilder --> [Bilder](Anhang/Bilder)
 
-Konfig-Files --> /Projektarbeit/Anhang/Konfigurationen
+Konfig-Files --> [Konfig-Files](Anhang/Konfigurationen)
