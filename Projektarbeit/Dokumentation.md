@@ -74,7 +74,7 @@ Ursprünglich war Metasploit in **Perl** geschrieben, wurde 2007 mit Version 3.0
 - **Auxiliary:** Hilfsmodule (z. B. Scanner, Fuzzer, DoS)
 - **Post:** Module für die Post-Exploitation-Phase
 - **Encoders:** Verschleierung von Payloads (z. B. zur AV-Umgehung)
-- **NOPs:** Helfen dabei verschlüsselte Payloads zu stabilisieren, damit diese beim entschlüsseln immer noch funktionieren
+- **NOPs:** Sind wirkungslose Füllbefehle, die vor codierten Payloads eingesetzt werden, damit der Decoder trotz leichter Abweichungen im Einstiegspunkt zuverlässig ausgeführt wird. Zudem sorgen sie für eine konsistente Payload Grösse.
 
 
 #### 3.3.2 msfconsole
@@ -103,7 +103,7 @@ Zentrale Konsole zur Interaktion mit dem Framework. Anbindung an eine Datenbank 
  
 
 
-#### 3.3.3 msvenom
+#### 3.3.3 msfvenom
 Ist Metasploits eigenständiges Kommandozeilen-Tool zur Generierung und Kodierung von Payloads außerhalb der msfconsole.
  
 #### 3.3.4 Payload-Konzepte
